@@ -43,6 +43,7 @@ class register(views.View):
 
             return JsonResponse({'code': 1, 'info': '成功'})
 
+
         else:
             # import json
             # return HttpResponse(json.dumps(result.errors))
