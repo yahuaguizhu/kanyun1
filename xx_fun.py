@@ -4,6 +4,7 @@
 from django.urls import reverse
 
 
+
 def pages(total, page, route):
 
     ps = '<a class="item" href="%s">首页</a>' % (reverse(route, args=(1,)))
