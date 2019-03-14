@@ -1,0 +1,121 @@
+{% extends 'common/base.html' %}
+
+{% block page_body %}
+<div class="page-body">
+            <div class="ui nags"></div>
+            <div class="banner">
+                <div class="ui container">
+                    <div class="info">
+                        <div class="logo"></div>
+                        <h2>专注于文档在线创作、协作和托管</h2>
+                        <h3>让写作更方便 发布更简单</h3>
+                        <a href="#" class="explore">随便看看</a>
+                    </div>
+                    <div class="login">
+                        <form class="ui form" data-action="login" method="post" autocomplete="off">
+                            <div class="ui error message"></div>
+                            <div class="field">
+                                <input class="text-input" type="text" name="account" placeholder="用户名/邮箱">
+                            </div>
+                            <div class="field">
+                                <input class="text-input" type="password" name="password" placeholder="密码">
+                            </div>
+                            <div class="two fields">
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <!--<input name="remember" type="checkbox" checked="checked" tabindex="0"-->
+                                               <!--class="hidden">-->
+                                        <!--<label>保持登录</label>-->
+                                    </div>
+                                </div>
+                                <div class="field" style="text-align: right;">
+                                    <a href="#">忘记密码？</a>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <button class="ui button green fluid" type="submit">立即登录</button>
+                            </div>
+
+                            <div class="field">
+                                <h4 class="ui header">使用第三方帐号登录</h4>
+                                <div class="ui four column grid">
+                                    <div class="column center aligned">
+                                        <a href="#"
+                                           class="ui circular button icon github huge">
+                                            <i class="icon github"></i>
+                                        </a>
+                                    </div>
+                                    <div class="column center aligned">
+                                        <a href="#"
+                                           class="ui circular button icon wechat huge">
+                                            <i class="icon wechat"></i>
+                                        </a>
+                                    </div>
+                                    <div class="column center aligned">
+                                        <a href="#"
+                                           class="ui circular button icon qq huge">
+                                            <i class="icon qq"></i>
+                                        </a>
+                                    </div>
+                                    <div class="column center aligned">
+                                        <a href="#"
+                                           class="ui circular button icon weibo huge">
+                                            <i class="icon weibo"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <a href="#">没有帐号，点击注册</a>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui container ">
+                <div class="functional">
+                    <div class="item">
+                        <h4><i class="icon circular inverted green markdown"></i>MarkDown</h4>
+                        <p>在MarkDown标准规范的基础上，做了一些体验上的改进，增加了一些个性化标签和TeX公式支持，并且在编辑的同时可以实时预览，新手简单上手，给你非一般的写作感受。</p>
+
+                    </div>
+                    <div class="item">
+                        <h4><i class="icon circular inverted green git"></i><span>版本控制 </span></h4>
+                        <p>基于Git版本库管理文档历史记录，让你的文档修订有迹可循，随时还原，同时可以完成离线编辑和远程推送，或者同步推送到其它的Git服务器。</p>
+
+                    </div>
+                    <div class="item">
+                        <h4><i class="icon circular inverted green team"></i><span>团队协作</span></h4>
+                        <p>多人在线和离线方式进行文档协作编辑，并支持文档和团队成员的角色授权，包括管理、编辑和阅读权限。</p>
+
+                    </div>
+                    <div class="item">
+                        <h4><i class="icon circular inverted green api"></i><span>API文档</span></h4>
+                        <p>看云独有格式，让你快速定义和生成API文档，并支持在线调试，移动APP接口开发的必须。</p>
+
+                    </div>
+                    <div class="item">
+                        <h4><i class="icon circular inverted green exchange"></i><span>导入导出  </span></h4>
+                        <p>支持CHM/EPUB格式导入以及EPUB/PDF/WORD格式导出，并且可以导入Github上的文档，单页面内容可以采用HTML一键导入。</p>
+
+                    </div>
+                    <div class="item">
+                        <h4><i class="icon circular inverted green diy"></i><span>个性化</span></h4>
+                        <p>通过给文档绑定域名和自定义阅读页面的样式及导航，彰显作者个性化文档表现和品牌需求。</p>
+
+                    </div>
+                </div>
+                <div class="ui divider"></div>
+                <div class="slogan">
+                    <h2>超过<strong>80,000人</strong>使用看云进行文档写作</h2>
+                    <h3>从现在开始，把文档托管到云端！</h3>
+                    <a href="#" class="explore">立即体验</a>
+                </div>
+            </div>
+
+        </div>
+{% endblock %}

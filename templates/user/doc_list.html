@@ -1,0 +1,63 @@
+{% extends 'common/book_base.html' %}
+
+
+{% block title %}我的文档{% endblock %}
+
+{% block page_body %}
+    {% load static %}
+<div class="page-body">
+            <div class="ui nags">
+            </div>
+            <div class="w-breadcrumb">
+                <div class="ui container">
+                    <a class="toc">
+                        <i class="align justify icon"></i>
+                    </a>
+                    <div class="ui huge breadcrumb">
+                        <div class="active section">我的文档</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui container">
+                <div class="sixteen wide column"></div>
+                <div class="ui divided items">
+                    {% for i in lists %}
+                        <div class="item">
+                        <div class="ui image bordered rounded">
+                            <img src="{% static 'asset/images/source.png' %}">
+                        </div>
+                        <div class="content">
+                            <a class="header" href="#">{{ i.name }}</a>
+                            <div class="meta">
+                                评论：0
+                                关注：0
+                            </div>
+                            <div class="description">
+                                <p>{{ i.introduction }}</p>
+                            </div>
+                        </div>
+                        <div class=" action">
+                            <div class="ui basic small buttons">
+                                <a target="_blank" href="{% url 'user:create_content' i.id 0 %}" class="ui button">创作</a>
+                                <div class="ui pointing top right dropdown icon button" tabindex="0">
+                                    <i class="dropdown icon"></i>
+                                    <div class="menu" tabindex="-1">
+                                        <a href="#" target="_blank"
+                                           class="item">阅读</a>
+                                        <a href="{% url 'user:book_set' i.id %}" class="item">设置</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                </div>
+                <div class="ui basic segment">
+                    <div class="ui pagination menu">
+                        {{ page_raw | safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>测试 · 看云</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="{% static 'asset/editor/editor.css' %}">
+    <link rel="stylesheet" href="{% static 'asset/editor/editormd.css' %}">
+    <link rel="stylesheet" href="{% static 'asset/css/style.css' %}">
+    <style>
+        .close ul{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="main">
+    <div class="root">
+        <div class="ui toast bottom-right "></div>
+        <div class="window-container">
+            <div class="window-title">
+                <div class="toolbar">
+                    <div class="toolbar-actions">
+                        <a class="ui icon green button" href="{% url 'user:user_doc_lists' %}">
+                            <span data-tooltip="返回概要" data-position="bottom left" data-tooltip-small="true" data-inverted="true"></span>
+                            <i class="icon chevron left"></i>
+                        </a>
+                        <div class="ui buttons blue right floated">
+                            <div class="ui icon button">
+                                <span data-tooltip="保存" id="save" data-position="bottom center" data-tooltip-small="true" data-inverted="true"></span>
+                                保存文章
+                            </div>
+                        </div>
+                        <div class="ui buttons orange right floated">
+                            <div class="ui icon button">
+                                <span data-tooltip="保存并发布" id="publish" data-position="bottom center" data-tooltip-small="true" data-inverted="true"></span>
+                                保存并发布
+                            </div>
+                        </div>
+                        <div class="ui buttons right floated"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="SplitPane vertical" style="display: flex; flex: 1 1 0%; height: 100%; position: absolute; outline: none; overflow: hidden; user-select: text; flex-direction: row; left: 0px; right: 0px;">
+                    <div class="Pane vertical Pane1 " style="flex: 0 0 auto; position: relative; outline: none; width: 280px;">
+                        <div class="sidebar">
+                            <div class="sidebar-selector">
+                                <div class="item active"><i class="icon content"></i>目录</div>
+                            </div>
+                            <div class="sidebar-body">
+                                <div class="catalog-body">
+                                    <ul>
+                                        <li class="{% if cid == 0 %}changed{% endif %}" draggable="true" data-href='{% url "user:create_chapter_form" id 0 %}'>
+                                            <div class="wholerow"></div>
+                                            <i class="icon"></i>
+                                            <a class="text" href="{% url 'user:create_content' id 0 %}">概要</a>
+                                        </li>
+
+                                        {% for list in lists %}
+                                        <li data-openid="id{{ list.id }}" class="close {% if list.id == cid %}changed{% endif %}" data-href='{% url "user:create_chapter_form" id list.id %}' draggable="true">
+                                            <div class="wholerow"></div>
+                                            <i class="icon caret {% if list.nodes %}right{% endif %}"></i>
+                                            <a href="{% url 'user:create_content' id list.id %}" class="text">{{ list.name }}</a>
+                                            <ul>
+                                                {% for list2 in list.nodes %}
+                                                <li data-pid="id{{ list.id }}" data-openid="id{{ list2.id }}" class="close {% if list2.id == cid %}changed{% endif %}" data-href='{% url "user:create_chapter_form" id list2.id %}' draggable="true">
+                                                    <div class="wholerow"></div>
+                                                    <i class="icon caret {% if list2.nodes %}right{% endif %}"></i>
+                                                    <a href="{% url 'user:create_content' id list2.id %}" class="text">{{ list2.name }}</a>
+                                                    <ul>
+                                                        {% for list3 in list2.nodes %}
+                                                        <li data-pid="id{{ list2.id }}" data-openid="id{{ list3.id }}" class="{% if list3.id == cid %}changed{% endif %}"  draggable="true">
+                                                            <div class="wholerow"></div>
+                                                            <i class="icon"></i>
+                                                            <a href="{% url 'user:create_content' id list3.id %}" class="text">{{ list3.name }}</a>
+                                                        </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <div class="ui header center aligned">
+                                        <button class="ui button small" id="new_chapter">新建章节</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <span role="presentation" class="Resizer vertical"></span>
+                    <div id="editormd">
+                        <textarea style="display:none;">{{ content }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="{% static 'asset/js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'asset/editor/editormd.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/layer/layer.js' %}"></script>
+
+<script type="text/javascript">
+    //加载MarkDown编辑器
+    var EditorMd;
+    $(function() {
+        EditorMd = editormd("editormd", {
+            width   : "90%",
+            height  : '100%',
+            syncScrolling : "single",
+            path    : "{% static 'asset/editor/lib/' %}"
+        });
+    });
+
+    $(function () {
+        //控制当前章节及其上级 上上级 的展开
+        var open_object = $('li[data-openid=id{{ cid }}]');
+        //当前等级上一级的data-openid
+        var pid = open_object.attr('data-pid');
+        if (pid){
+            //试图展开上级
+            var parent_open_object = $('li[data-openid='+pid+']'); //上级对象
+            parent_open_object.addClass('open').removeClass('close');
+            parent_open_object.children().eq(1).addClass('down').removeClass('right');
+            var ppid = parent_open_object.attr('data-pid');
+            if (ppid){
+                var parent_open_object2 = $('li[data-openid='+ppid+']'); //上上级对象
+                parent_open_object2.addClass('open').removeClass('close');
+                parent_open_object2.children().eq(1).addClass('down').removeClass('right');
+            }
+        }
+
+        $('.item.icon').click(function () {
+            var i = $('.window-body');
+            if(i.hasClass('with-sidebar')){
+                i.removeClass('with-sidebar')
+            }else{
+                i.addClass('with-sidebar')
+            }
+        });
+
+        //控制章节的左侧的开闭
+        $('.icon.caret').click(function () {
+            var i = $(this);
+            if(i.parent().hasClass('open')){
+                //被点击前如果是打开状态
+                i.parent().removeClass('open').addClass('close');
+                //删除向下的小图标， 添加向右的小图标
+                i.addClass('right').removeClass('down')
+            }else{
+                //被点击前是关闭状态
+                i.parent().addClass('open').removeClass('close');
+                i.addClass('down').removeClass('right');
+            }
+        });
+
+        //弹出添加章节的页面
+        $('#new_chapter').click(function () {
+            try {
+                url = $('.changed').attr('data-href');
+            }catch (e) {
+                console.log(e)
+            }
+            {#console.log(url);#}
+            if (url != undefined) {
+                layer.open({
+                  type: 2,
+                  title: '创建章节',
+                  shadeClose: true,
+                  shade: false,
+                  maxmin: true, //开启最大化最小化按钮
+                  area: ['480px', '320px'],
+                  content: url
+                });
+            }else{
+                layer.alert('最多只能创建三级章节')
+            }
+        });
+
+        //保存
+        $('#save').click(function () {
+            {#getHTML()#}
+            save()
+        });
+        
+        $('#publish').click(function () {
+            save(1)
+        });
+
+        function save(status) {
+            var content = EditorMd.getMarkdown();
+            var cid = "{{ cid }}";
+            var id = "{{ id }}"; //书的id
+            //todo 数据验证
+            data = {'content':content, 'book': id, 'cid':cid, csrfmiddlewaretoken: "{{ csrf_token }}"};
+            if (status) {
+                data.status = 1
+            }
+
+            $.post('{% url "user:add_content" %}', data, function (e) {
+                if(e.code){
+                    layer.alert('成功', {icon:6})
+                }else{
+                    layer.alert('失败', {icon:5})
+                }
+            })
+        }
+    })
+</script>
+</body>
+</html>

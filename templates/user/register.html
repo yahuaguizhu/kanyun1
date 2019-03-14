@@ -1,0 +1,122 @@
+{% extends 'common/base.html' %}
+
+{% block title %}用户注册{% endblock %}
+{% block page_body %}
+<div class="page-body">
+            <div class="m-auth auth-login">
+                <div class="auth-slogan">用户注册</div>
+
+                <form class="ui form" action="{% url 'user:register' %}" method="post" id="form" autocomplete="off">
+                    <div class="ui error message"></div>
+                    <div class="field">
+                        <input class="text-input" type="text" name="mobile" placeholder="手机号">
+                        {{ xxx.errors.mobile.0 }}
+                    </div>
+                    <div class="field hide">
+                        <input class="text-input" type="text" name="verify" placeholder="手机验证码">
+                    </div>
+                    <div class="field">
+                        <input class="text-input" type="password" name="password" placeholder="密码">
+                        {{ xxx.errors.password.0 }}
+                    </div>
+                    <div class="field">
+                        <input class="text-input" type="password" name="password_confirm" placeholder="密码确认">
+                        {{ xxx.errors.password_confirm.0 }}
+                    </div>
+
+                    <div class="field hide">
+                        <button class="ui button default fluid" id="send_sms" type="button">发送手机验证码</button>
+                    </div>
+
+                    <div class="field">
+                        {% csrf_token %}
+                        <button class="ui button green fluid" id="sbtn" type="button">免费注册</button>
+                    </div>
+
+                    <div class="field">
+                        <a href="#">已有帐号，点击登录</a>
+                    </div>
+
+{#                    {{ obj.password }}#}
+
+                </form>
+            </div>
+        </div>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+    $('.hide').css('display', 'none');
+
+
+    $('input[name="mobile"]').keyup(function () {
+        var mobile = $(this).val();
+        mo = /^1[356789]\d{9}$/
+        if(mo.test(mobile)){
+            $('.hide').css('display', 'block');
+        }else {
+            $('.hide').css('display', 'none');
+        }
+    });
+
+
+    $('#send_sms').click(function () {
+        var i = $(this);
+        mobile = $('input[name="mobile"]').val();
+        mo = /^1[356789]\d{9}$/;
+        if(mo.test(mobile)){
+            $.post('{% url "user:sendsms" %}', {mobile:mobile, csrfmiddlewaretoken: "{{ csrf_token }}"}, function (e) {
+                if (e.code == 1){
+                    //如果短信发送成功
+                    minute = 10;
+                    i.attr('disabled', 'disabled');
+                    var run;
+                    run = setInterval(function () {
+                        minute -= 1;
+                        if(minute < 1){
+                            clearInterval(run);
+                            i.removeAttr('disabled');
+                            i.html('发送手机验证码')
+                        }else {
+                            i.html(minute + ' 秒后重新发送')
+                        }
+                    }, 1000);
+                }else{
+                    alert(e.info)
+                }
+
+            });
+        }else{
+            alert('发送失败')
+        }
+    })
+
+
+$('#sbtn').click(function () {
+
+
+    $.post("{% url 'user:register' %}", $('#form').serialize(), function (e) {
+
+        if (e.code == 1){
+            window.location.href = "{% url 'user:login' %}"
+        }else if (e.code == 0) {
+            alert(e.info)
+        }else {
+            alert(e.info.__all__[0])
+        }
+    })
+
+
+})
+
+
+
+
+
+</script>
+{% endblock %}

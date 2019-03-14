@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'common/css.html' %}
+</head>
+<body  class="pushable">
+{% load static %}
+<script type="text/javascript" src="{% static 'asset/js/jquery.min.js' %}"></script>
+
+<div class="pusher">
+    <div class="w-page ">
+        <div class="page-body" style="padding: 20px">
+            <form class="ui form" method="post" id="form" autocomplete="off">
+                {% if ch %}
+{#                    如果存在父级的情况下#}
+                <div class="field">
+                    <input type="hidden" name="parent" value="{{ ch.id }}">
+                    <input class="text-input" type="text" value="{{ ch.name }}" disabled>
+                </div>
+                {% endif %}
+                <div class="field">
+                    <input class="text-input" type="text" name="name" placeholder="您要创建的章节名称">
+                </div>
+                <div class="field">
+                    {#要创建的章节的所属的书的id#}
+                    <input type="hidden" name="id" value="{{ id }}">
+                    {% csrf_token %}
+                    <button id="sbtn" class="ui button green fluid" type="button">添加章节</button>
+                    <span id="error"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    $('#sbtn').click(function () {
+
+        $.post('{% url "user:create_chapter" %}', $('#form').serialize(), function (e) {
+            if(!e.code){
+                $('#error').html(e.info)
+            }else {
+                {#window.parent.location.href = '{% url "user:create_content" id %}' + '/' + e.id#}
+                window.parent.location.href = e.url
+            }
+        })
+
+
+    })
+
+
+</script>
+
+</body>
+</html>

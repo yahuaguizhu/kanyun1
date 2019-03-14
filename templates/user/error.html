@@ -1,0 +1,13 @@
+{% extends 'common/book_base.html' %}
+
+
+{% block title %}我的文档{% endblock %}
+
+{% block page_body %}
+    {% load static %}
+<div class="page-body">
+
+{{ error_info }} ，<a href="javascript:history.back(-1);">返回上一步</a>
+
+</div>
+{% endblock %}

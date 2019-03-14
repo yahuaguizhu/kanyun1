@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/webuploader/webuploader.css' %}">
+    <!--引入JS-->
+    <script type="text/javascript" src="{% static 'asset/js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/webuploader/webuploader.min.js' %}"></script>
+
+    <link  href="{% static 'lib/cropper/dist/cropper.min.css' %}" rel="stylesheet">
+    <script src="{% static 'lib/cropper/dist/cropper.min.js' %}"></script>
+
+</head>
+<body>
+
+
+<input type="file" id="upFile"> <button id="up">确认</button>
+<div style="height: 500px;">
+    <img src="" id="img">
+</div>
+
+<button id="xxx">确定上传头像</button>
+<div>
+
+</div>
+
+{#<img id="yyy" src="">#}
+
+<script>
+    var $image = $('#img')
+    var file;
+    $('#up').click(function () {
+        //读取上传框里面的文件数据
+        file = $('#upFile')[0].files[0];
+        console.log(file)
+
+        if (window.FileReader){
+            var fr = new FileReader();
+            fr.onload = function (e) {
+                //将上传框的数据的base64码获取到  并且放到img标签的src属性里
+                $image.attr('src', e.target.result);
+                //初始化一个裁剪功能
+                $image.cropper({
+                   aspectRatio:1 / 1,
+                   viewMode: 3,
+                });
+            };
+            //当使用readAsDataURL方法的时候会触发当前对象的onload方法
+            fr.readAsDataURL(file);
+        }
+
+    });
+
+    $('#xxx').click(function () {
+        if (file != undefined){
+            //获取被裁减的cavas
+            var cas=$image.cropper('getCroppedCanvas')
+            //转换为base64e
+            var base64url=cas.toDataURL(file.type);
+            {#console.log(base64url)#}
+            //请求里地址不写 代表当前
+            $.post('',{'img':base64url,'name':file.name,csrfmiddlewaretoken: "{{ csrf_token }}"},function (e) {
+
+                if (e.code){
+                    window.parent.location.reload()
+                }
+            })
+        }else{
+            alert('请选择上传文件')
+        }
+    })
+
+
+</script>
+
+</body>
+</html>

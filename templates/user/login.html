@@ -1,0 +1,69 @@
+{% extends 'common/base.html' %}
+
+{% block title %}用户登录{% endblock %}
+{% block page_body %}
+<div class="page-body">
+            <div class="m-auth auth-login">
+                <div class="auth-slogan">用户登录</div>
+
+                <form class="ui form" method="post" autocomplete="off">
+                    <div class="ui error message"></div>
+                    <div class="field">
+                        <input class="text-input" type="text" name="mobile" placeholder="手机号">
+                    </div>
+                    <div class="field">
+                        {% csrf_token %}
+                        <input class="text-input" type="password" name="password" placeholder="密码">
+                    </div>
+                    <div class="two fields">
+                        <div class="field">
+                            <!--<div class="ui checkbox">-->
+                                <!--<input name="remember" type="checkbox" checked="checked" tabindex="0" class="hidden">-->
+                                <!--<label>保持登录</label>-->
+                            <!--</div>-->
+                        </div>
+                        <div class="field" style="text-align: right;">
+                            <a href="#">忘记密码？</a>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <button class="ui button green fluid" type="submit">立即登录</button>
+                    </div>
+
+                    <div class="field">
+                        <h4 class="ui header">使用第三方帐号登录</h4>
+                        <div class="ui four column grid">
+                            <div class="column center aligned">
+                                <a href="#"
+                                   class="ui circular button icon github huge">
+                                    <i class="icon github"></i>
+                                </a>
+                            </div>
+                            <div class="column center aligned">
+                                <a href="#"
+                                   class="ui circular button icon wechat huge">
+                                    <i class="icon wechat"></i>
+                                </a>
+                            </div>
+                            <div class="column center aligned">
+                                <a href="#" class="ui circular button icon qq huge">
+                                    <i class="icon qq"></i>
+                                </a>
+                            </div>
+                            <div class="column center aligned">
+                                <a href="#"
+                                   class="ui circular button icon weibo huge">
+                                    <i class="icon weibo"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <a href="#">没有帐号，点击注册</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+{% endblock %}

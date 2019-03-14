@@ -1,0 +1,183 @@
+{% extends 'common/book_base.html' %}
+
+
+{% block title %}我的文档{% endblock %}
+
+{% block page_body %}
+    {% load static %}
+<div class="page-body">
+            <div class="ui nags">
+            </div>
+            <div class="w-breadcrumb">
+                <div class="ui container">
+                    <a class="toc">
+                        <i class="align justify icon"></i>
+                    </a>
+                    <div class="ui huge breadcrumb">
+                        文档设置
+                    </div>
+                </div>
+            </div>
+            <div class="ui container">
+                <div class="ui segments">
+                    <div class="ui segment">
+                        <h4>基础设置</h4>
+                    </div>
+                    <div class="ui segment">
+                        <form class="ui form" action="" method="post">
+                            <div class="ui message error"></div>
+                            <div class="ui success message">
+                                <div class="header"><i class="icon check circle outline"></i>修改成功</div>
+                            </div>
+                            <div class="field required">
+                                <label>文档名称</label>
+                                <input type="text" name="title" value="{{ book.name }}">
+                            </div>
+                            <div class="field">
+                                <label>文档简介</label>
+                                <textarea name="description" rows="4">{{ book.introduction }}</textarea>
+                            </div>
+
+
+                            <div class="field">
+                                <label>文档标签</label>
+                                <div data-selector="tags" id="tags" data-not-init="" class="ui fluid multiple search selection dropdown">
+                                    <i class="dropdown icon"></i>
+                                    <a class="ui label transition visible t" style="display: none !important;"></a>
+                                    {% for i in tags %}
+                                    <a class="ui label transition visible t" data-id="{{ i.id }}" style="display: inline-block !important;">
+                                        {{ i.name }}
+                                        <i class="delete icon"></i>
+                                    </a>
+                                    {% endfor %}
+                                    <input class="search" autocomplete="off" id="keyword" style="width: 6em">
+                                    <span class="sizer"></span>
+                                    <div class="default text">输入标签名称后，使用"回车"完成输入</div>
+                                    <div class="menu" tabindex="-1"></div>
+                                </div>
+                                <p class="help-block">最多允许添加10个标签，每个标签最大6个字符。标签可以使你的文档更容易被检索到</p>
+                            </div>
+
+
+                            <div class="field">
+                                {% csrf_token %}
+                                <input type="hidden" name="id" value="{{ book.id }}">
+                                <button class="ui button primary" type="submit">保存</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="ui segments">
+                    <div class="ui segment">
+                        <h4>文档可见性</h4>
+                    </div>
+                    <div class="ui segment">
+                        <form class="ui form" method="post" data-action="save book visibility" data-namespace="yeye"
+                              data-name="ss123456">
+                            <div class="ui error message"></div>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="visibility_level" value="20" checked="" tabindex="0"
+                                           class="hidden">
+                                    <label>
+                                        公开
+                                        <span class="help-block">任何人都可以阅读该文档</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="visibility_level" value="0" tabindex="0" class="hidden">
+                                    <label>
+                                        私有
+                                        <span class="help-block">非文档成员无法访问私有文档的任何信息</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <button type="submit" class="ui button primary ">保存</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="ui segments">
+                    <div class="ui red inverted segment">
+                        <h4>谨慎操作</h4>
+                    </div>
+                    <div class="ui segment">
+                        <div class="ui middle aligned very relaxed divided list">
+
+                            <div class="item">
+                                <div class="right floated content">
+                                    <div data-selector="transfer" class="ui button red small">转让文档</div>
+                                </div>
+                                <div class="content">
+                                    <div class="header">转让文档给其他人</div>
+                                    可以转让给其他人或者团队
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="right floated content">
+                                    <div data-selector="delete" class="ui button red small">删除文档</div>
+                                </div>
+                                <div class="content">
+                                    <div class="header">删除这个文档</div>
+                                    此操作不可撤销，谨慎操作
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+{% endblock %}
+
+{% block scripts %}
+
+
+    <script>
+
+    $('#keyword').keydown(function (e) {
+        if (e.keyCode == 13){
+            var i = $(this);
+            var book_id = '{{ book.id }}';
+            var keyword = i.val();
+            if(keyword.length < 2){
+                alert('标签最少需要2个字符');
+            }else {
+                $.post('{% url "user:add_book_tag" %}', {'book_id': book_id,'keyword': keyword, csrfmiddlewaretoken: "{{ csrf_token }}"}, function (e) {
+                    if (e.code) {
+                        var str = ' <a class="ui label transition visible t" data-value="'+keyword+'" style="display: inline-block !important;">'+keyword+'<i class="delete icon"></i></a>';
+                        $('.t').last().after(str);
+                        i.val('')
+                    }else {
+                        alert(e.info)
+                    }
+                })
+            }
+            return false
+        }
+    });
+    $('#tags').on('click', '.delete.icon', function () {
+        var i = $(this);
+        var book_id = '{{ book.id }}';
+        var tag_id = i.parent().attr('data-id');
+        $.post('{% url "user:delete_book_tag" %}', {'book': book_id, 'tag': tag_id, csrfmiddlewaretoken: "{{ csrf_token }}" }, function (e) {
+            if(e.code){
+                i.parent().remove();
+            }else {
+                alert(e.info);
+            }
+        })
+    })
+
+
+
+    </script>
+
+{% endblock %}

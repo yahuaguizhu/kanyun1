@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>操作提示</title>
+</head>
+<body>
+
+{{ info }}
+
+<div><span id="sec">3</span>秒后即将跳转</div>
+<script>
+
+    var url = "{{ url }}"
+
+    {% comment %}setTimeout(function () {
+        window.location.href = url
+    }, 3000){% endcomment %}
+
+    setInterval(function () {
+
+        var s = document.getElementById('sec');
+        var sec = parseInt(s.innerHTML);
+        if(sec < 2){
+            window.location.href = url
+        }else{
+            sec = sec - 1;
+            s.innerHTML = sec
+        }
+
+    }, 1000)
+
+</script>
+
+</body>
+</html>

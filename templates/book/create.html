@@ -1,0 +1,78 @@
+{% extends 'common/book_base.html' %}
+
+
+{% block page_body %}
+    <div class="page-body">
+            <div class="ui nags">
+            </div>
+            <div class="w-breadcrumb">
+                <div class="ui container">
+                    <a class="toc">
+                        <i class="align justify icon"></i>
+                    </a>
+                    <div class="ui huge breadcrumb">
+                        <div class="active section">创建文档</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui container">
+                <div class="ui grid internally celled segment">
+                    <style>
+                            .myred{
+                                color: red;
+                            }
+                        </style>
+                    <div class="row">
+
+                        <div class="ui eleven column">
+                            <form  class="ui form" method="post">
+                                <div class="field required">
+                                    <label>文档名称</label>
+                                    <input name="name" placeholder="不超过100个字符" type="text">
+                                    <span class="myred">{{ error.name.0 }}</span>
+                                </div>
+                                <div class="field required">
+                                    <label>文档标识</label>
+                                    <input name="mark" placeholder="只能包含小写字母、数字，以及“-”和“_”符号,并且只能小写字母打头" type="text">
+                                    <span class="myred">{{ error.mark.0 }}</span>
+                                </div>
+                                <div class="field">
+                                    <label>简介</label>
+                                    <textarea name="introduction" rows="2"></textarea>
+                                    <span class="myred">{{ error.introduction.0 }}</span>
+                                </div>
+                                <div class="grouped fields">
+                                    <label>可见性</label>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="open" value="1" checked="checked"
+                                                   tabindex="0" class="hidden">
+                                            <label>
+                                                公开
+                                                <span class="help-block">任何人都可以阅读该文档</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="open" value="0" tabindex="0"
+                                                   class="hidden">
+                                            <label>
+                                                私有
+                                                <span class="help-block">非文档成员无法访问私有文档的任何信息</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    {% csrf_token %}
+                                    {{ createError }}
+                                    <button type="submit" class="ui button primary fluid">创建</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

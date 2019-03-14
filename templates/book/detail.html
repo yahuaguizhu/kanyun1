@@ -1,0 +1,269 @@
+{% extends 'common/base.html' %}
+
+{% block title %}图书详情{% endblock %}
+{% block page_body %}
+<div class="page-body">
+            <div class="ui nags">
+            </div>
+            <div class="w-breadcrumb">
+                <div class="ui container">
+                    <a class="toc">
+                        <i class="align justify icon"></i>
+                    </a>
+                    <div class="ui huge breadcrumb">
+                        <a href="#" class="section">
+                            <img class="ui avatar mini image bordered" src="#">
+                            俊杰
+                        </a>
+                        <div class="divider">/</div>
+                        <div class="active section">编程开发笔记</div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="ui container">
+                <div class="ui items book">
+                    <div class="item">
+                        <div class="ui image small bordered rounded ">
+                            <img src="./asset/css/javascript!middle">
+                        </div>
+                        <div class="content">
+                            <h1 class="ui header">编程开发笔记</h1>
+                            <div class="meta">
+                                评论：0 关注：2
+                            </div>
+                            <div class="description">
+                                Record every bit of life ~
+                            </div>
+                            <div class="extra">
+                                <div class="ui labels">
+                                    <a href="#" class="ui label">
+                                        前端
+                                    </a>
+                                    <a href="#" class="ui label">
+                                        CSS
+                                    </a>
+                                    <a href="#" class="ui label">
+                                        笔记
+                                    </a>
+                                    <a href="#" class="ui label">
+                                        html
+                                    </a>
+                                    <span class="ui label">
+                                                JAVASCRIPT
+                                            </span>
+                                </div>
+                            </div>
+
+                            <div class="extra">
+                                <a href="{% url 'book:content' 1 %}" class="ui large button green">阅读</a>
+                            </div>
+
+                            <div class="w-action">
+                                <a data-selector="reward" class="action">
+                                    <i class="reward icon"></i>
+                                    <span class="text">打赏</span>
+                                </a>
+                                <a class="action" data-namespace="q1093336886" data-name="javascript"
+                                   data-action="kindle book" data-method="post" data-success="推送成功">
+                                    <i class="kindle icon"></i>
+                                    <span class="text">推送到Kindle</span>
+                                </a>
+                                <div class="ui dropdown top left pointing action" tabindex="0">
+                                    <i class="download icon"></i>
+                                    <span class="text">下载</span>
+                                    <div class="menu fluid" tabindex="-1">
+                                        <a class="item" data-action="download book" data-namespace="q1093336886"
+                                           data-name="javascript" data-type="pdf">
+                                            PDF
+                                        </a>
+                                        <a class="item" data-action="download book" data-namespace="q1093336886"
+                                           data-name="javascript" data-type="epub">
+                                            EPUB
+                                        </a>
+                                        <a class="item" data-action="download book" data-namespace="q1093336886"
+                                           data-name="javascript" data-type="mobi">
+                                            MOBI
+                                        </a>
+                                    </div>
+                                </div>
+                                <a class="action" data-selector="xiao" data-id="401320">
+                                    <i class="xiao icon"></i>
+                                    <span class="text">小程序阅读</span>
+                                </a>
+                                <a class="action error" data-selector="attention" data-id="401320"><i
+                                        class="heart outline icon"></i><span class="text">关注</span></a>
+                                <div class="ui dropdown top left pointing action" tabindex="0">
+                                    <i class="share alternate icon"></i>
+                                    <span class="text">分享</span>
+                                    <div class="menu fluid" tabindex="-1">
+                                        <a class="item" data-selector="share" data-type="weibo">
+                                            微博
+                                        </a>
+                                        <a class="item" data-selector="share" data-type="qq">
+                                            QQ
+                                        </a>
+                                        <a class="item" data-selector="share" data-type="wechat">
+                                            微信
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="ui modal tiny" data-selector="xiao share modal">
+                                    <i class="close icon"></i>
+                                    <div class="header">小程序阅读</div>
+                                    <div class="content">
+                                        <img width="320" height="320" class="ui centered image"
+                                             src="#">
+                                        <div class="ui header center aligned">打开微信"扫一扫"阅读</div>
+                                    </div>
+                                </div>
+                                <a target="_blank" class="action" href="#">
+                                    <i class="icon exclamation triangle"></i>
+                                    <span class="text">举报</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui green secondary large pointing stackable menu">
+                    <a class="active item" data-tab="dashboard">
+                        概要
+                    </a>
+                    <a class="item" data-tab="catalog">
+                        目录
+                    </a>
+                    <a class="item" data-tab="reward">
+                        打赏记录
+                    </a>
+                </div>
+                <div class="ui tab active article-body" data-tab="dashboard">
+                    暂无描述
+                </div>
+                <div class="ui tab" data-tab="catalog">
+                    <div class="ui secondary fluid vertical menu">
+                        <a href="#" class="item">
+                            前端开发笔记
+                        </a>
+                        <a href="#" class="item">
+                            Ordinary小助手
+                        </a>
+                    </div>
+                </div>
+                <div class="ui tab" data-tab="reward">
+                    <div class="ui large labels" data-selector="reward list">
+
+
+                    </div>
+                    <div class="ui header center aligned">
+                        <div data-selector="reward loader" style="display: none;"
+                             class="ui active centered inline loader"></div>
+                        <button data-selector="reward more" style="display: none;" class="ui button small basic">加载更多
+                        </button>
+                    </div>
+                </div>
+
+                <h3 class="ui header dividing">推荐阅读</h3>
+                <div class="ui special eight doubling cards">
+                    <a class="ui link card" href="#">
+                        <div class="blurring dimmable image">
+                            <div class="ui dimmer transition visible active animating fade out"
+                                 style="display: flex !important; animation-duration: 500ms;">
+                                <div class="content">
+                                    <div class="center ">
+                                        <h4>JavaScript面向对象编程指南</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <img src="./asset/css/biubiu!middle">
+                        </div>
+                    </a> <a class="ui link card" href="#">
+                    <div class="blurring dimmable image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center ">
+                                    <h4>PHP/Python/前端/Linux 等等 学习笔记</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="./asset/css/python!middle">
+                    </div>
+                </a> <a class="ui link card" href="#">
+                    <div class="blurring dimmable image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center ">
+                                    <h4>学习笔记</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="./asset/css/daijiandong!middle">
+                    </div>
+                </a> <a class="ui link card" href="#">
+                    <div class="blurring dimmable image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center ">
+                                    <h4>(第二版) PHP Golang Linux 笔记</h4>
+                                    <p class="ui text yellow ">
+                                        ￥10.00
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="#">
+                    </div>
+                </a> <a class="ui link card" href="#">
+                    <div class="blurring dimmable image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center ">
+                                    <h4>(第一版) PHP Golang Linux 笔记</h4>
+                                    <p class="ui text yellow ">
+                                        ￥1.00
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="#">
+                    </div>
+                </a> <a class="ui link card" href="#">
+                    <div class="blurring dimmable image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center ">
+                                    <h4>(开源版)ThinkPHP Golang MySQL Linux 笔记</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="#">
+                    </div>
+                </a> <a class="ui link card" href="#">
+                    <div class="blurring dimmable image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center ">
+                                    <h4>工具&amp;环境配置</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="#">
+                    </div>
+                </a> <a class="ui link card" href="#">
+                    <div class="blurring dimmable image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center ">
+                                    <h4>Html快速入门</h4>
+                                    <p class="ui text yellow ">
+                                        ￥5.00
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="#">
+                    </div>
+                </a></div>
+            </div>
+
+        </div>
+{% endblock %}

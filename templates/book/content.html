@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>序言 · ThinkPHP5.0完全开发手册 · 看云</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" data-react-helmet="true">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="{% static 'asset/css/style.css' %}">
+    <style type="text/css" data-react-helmet="true">
+        .ಠhighlight-container {
+      /**
+       * prism.js default theme for JavaScript, CSS and HTML
+       * Based on dabblet (http://dabblet.com)
+       * @author Lea Verou
+       */
+       /* Code blocks */
+       /* Inline code */
+    }
+
+    .ಠhighlight-container code[class*="language-"],
+    .ಠhighlight-container pre[class*="language-"] {
+        color: black;
+        background: none;
+        text-shadow: 0 1px white;
+        font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+        text-align: left;
+        white-space: pre;
+        word-spacing: normal;
+        word-break: normal;
+        word-wrap: normal;
+        line-height: 1.5;
+        -moz-tab-size: 4;
+        -o-tab-size: 4;
+        tab-size: 4;
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+    }
+
+    .ಠhighlight-container pre[class*="language-"]::-moz-selection,
+    .ಠhighlight-container pre[class*="language-"] ::-moz-selection,
+    .ಠhighlight-container code[class*="language-"]::-moz-selection,
+    .ಠhighlight-container code[class*="language-"] ::-moz-selection {
+        text-shadow: none;
+        background: #b3d4fc;
+    }
+
+    .ಠhighlight-container pre[class*="language-"]::selection,
+    .ಠhighlight-container pre[class*="language-"] ::selection,
+    .ಠhighlight-container code[class*="language-"]::selection,
+    .ಠhighlight-container code[class*="language-"] ::selection {
+        text-shadow: none;
+        background: #b3d4fc;
+    }
+
+    @media print {
+        .ಠhighlight-container code[class*="language-"],
+        .ಠhighlight-container pre[class*="language-"] {
+            text-shadow: none;
+        }
+    }
+
+    .ಠhighlight-container pre[class*="language-"] {
+        padding: 1em;
+        margin: .5em 0;
+        overflow: auto;
+    }
+
+    .ಠhighlight-container :not(pre) > code[class*="language-"],
+    .ಠhighlight-container pre[class*="language-"] {
+        background: #f5f2f0;
+    }
+
+    .ಠhighlight-container :not(pre) > code[class*="language-"] {
+        padding: .1em;
+        border-radius: .3em;
+        white-space: normal;
+    }
+
+    .ಠhighlight-container .token.comment,
+    .ಠhighlight-container .token.prolog,
+    .ಠhighlight-container .token.doctype,
+    .ಠhighlight-container .token.cdata {
+        color: slategray;
+    }
+
+    .ಠhighlight-container .token.punctuation {
+        color: #999;
+    }
+
+    .ಠhighlight-container .namespace {
+        opacity: .7;
+    }
+
+    .ಠhighlight-container .token.property,
+    .ಠhighlight-container .token.tag,
+    .ಠhighlight-container .token.boolean,
+    .ಠhighlight-container .token.number,
+    .ಠhighlight-container .token.constant,
+    .ಠhighlight-container .token.symbol,
+    .ಠhighlight-container .token.deleted {
+        color: #905;
+    }
+
+    .ಠhighlight-container .token.selector,
+    .ಠhighlight-container .token.attr-name,
+    .ಠhighlight-container .token.string,
+    .ಠhighlight-container .token.char,
+    .ಠhighlight-container .token.builtin,
+    .ಠhighlight-container .token.inserted {
+        color: #690;
+    }
+
+    .ಠhighlight-container .token.operator,
+    .ಠhighlight-container .token.entity,
+    .ಠhighlight-container .token.url,
+    .ಠhighlight-container .language-css .token.string,
+    .ಠhighlight-container .style .token.string {
+        color: #9a6e3a;
+        background: rgba(255, 255, 255, 0.5);
+    }
+
+    .ಠhighlight-container .token.atrule,
+    .ಠhighlight-container .token.attr-value,
+    .ಠhighlight-container .token.keyword {
+        color: #07a;
+    }
+
+    .ಠhighlight-container .token.function,
+    .ಠhighlight-container .token.class-name {
+        color: #DD4A68;
+    }
+
+    .ಠhighlight-container .token.regex,
+    .ಠhighlight-container .token.important,
+    .ಠhighlight-container .token.variable {
+        color: #e90;
+    }
+
+    .ಠhighlight-container .token.important,
+    .ಠhighlight-container .token.bold {
+        font-weight: bold;
+    }
+
+    .ಠhighlight-container .token.italic {
+        font-style: italic;
+    }
+
+    .ಠhighlight-container .token.entity {
+        cursor: help;
+    }
+    </style>
+    <style type="text/css" data-react-helmet="true">.article-comment {
+        position: relative;
+    }
+
+    .article-comment .header {
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+        font-size: 16px;
+        margin: 10px 0 16px;
+    }
+
+    .article-comment .form {
+        overflow: hidden;
+    }
+
+    .article-comment .form .field {
+        margin-bottom: 16px;
+        overflow: hidden;
+    }
+
+    .article-comment .form .field :disabled {
+        pointer-events: none;
+        opacity: .45;
+    }
+
+    .article-comment .form .field textarea {
+        margin: 0;
+        -webkit-appearance: none;
+        padding: .78571429em 1em;
+        background: #fff;
+        border: 1px solid rgba(34, 36, 38, 0.15);
+        outline: none;
+        color: rgba(0, 0, 0, 0.87);
+        border-radius: .28571429rem;
+        box-shadow: inset 0 0 0 0 transparent;
+        transition: color 0.1s ease, border-color 0.1s ease;
+        font-size: 1em;
+        line-height: 1.2857;
+        resize: vertical;
+        vertical-align: top;
+        width: 100%;
+    }
+
+    .article-comment .form .field textarea:focus {
+        color: rgba(0, 0, 0, 0.95);
+        border-color: #21ba45;
+        border-radius: .28571429rem;
+        background: #fff;
+        box-shadow: inset 0 0 0 0 rgba(34, 36, 38, 0.35);
+    }
+
+    .article-comment .form .field .button {
+        cursor: pointer;
+        display: inline-block;
+        min-height: 1em;
+        outline: none;
+        border: none;
+        vertical-align: baseline;
+        color: rgba(0, 0, 0, 0.6);
+        padding: .78571429em 1.5em;
+        text-transform: none;
+        text-shadow: none;
+        font-weight: 400;
+        line-height: 1em;
+        font-style: normal;
+        text-align: center;
+        text-decoration: none;
+        border-radius: .28571429rem;
+        user-select: none;
+        font-size: 13px;
+        color: #fff;
+        background: #21ba45 none;
+        float: right;
+    }
+
+    .article-comment .form .field .button:hover {
+        background-color: #16ab39;
+        color: #fff;
+    }
+
+    .article-comment .form .field .button.loading {
+        position: relative;
+        cursor: default;
+        text-shadow: none !important;
+        color: transparent !important;
+        opacity: 1;
+        pointer-events: auto;
+        transition: all 0s linear, opacity .1s ease;
+    }
+
+    .article-comment .form .field .button.loading:before,
+    .article-comment .form .field .button.loading:after {
+        position: absolute;
+        content: "";
+        top: 50%;
+        left: 50%;
+        margin: -0.64285714em 0 0 -0.64285714em;
+        width: 1.28571429em;
+        height: 1.28571429em;
+    }
+
+    .article-comment .form .field .button.loading:before {
+        border-radius: 500rem;
+        border: 0.2em solid rgba(0, 0, 0, 0.15);
+    }
+
+    .article-comment .form .field .button.loading:after {
+        animation: button-spin 0.6s linear;
+        animation-iteration-count: infinite;
+        border-radius: 500rem;
+        border: .2em solid transparent;
+        border-top-color: #fff;
+        box-shadow: 0 0 0 1px transparent;
+    }
+
+    .article-comment .form .field .error {
+        color: red;
+        line-height: 33px;
+    }
+
+    .article-comment .comments {
+        max-width: 100%;
+        margin: 1.5em 0;
+    }
+
+    .article-comment .comments .comment {
+        position: relative;
+        background: none;
+        margin: 1rem 0 0;
+        padding: 1rem 0 0;
+        border: none;
+        border-top: 1px solid rgba(90, 90, 90, 0.1);
+        line-height: 1.2;
+    }
+
+    .article-comment .comments .comment:first-child {
+        border-top: none;
+        margin-top: 0;
+        padding-top: 0;
+    }
+
+    .article-comment .comments .comment .avatar {
+        display: block;
+        width: 2.5em;
+        height: auto;
+        float: left;
+        margin: .2em 0 0;
+    }
+
+    .article-comment .comments .comment .avatar img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+    }
+
+    .article-comment .comments .comment .content {
+        margin-left: 3.5em;
+    }
+
+    .article-comment .comments .comment .content .author {
+        font-size: 1em;
+        color: rgba(0, 0, 0, 0.87);
+        font-weight: 700;
+    }
+
+    .article-comment .comments .comment .content .metadata {
+        display: inline-block;
+        margin-left: .5em;
+        color: rgba(0, 0, 0, 0.4);
+        font-size: .875em;
+    }
+
+    .article-comment .comments .comment .content .text {
+        margin: 6px 0 9px;
+        padding: 3px 0;
+        font-size: 1em;
+        word-wrap: break-word;
+        color: rgba(0, 0, 0, 0.87);
+        line-height: 1.3;
+    }
+
+    .article-comment .comments .comment .content .actions {
+        font-size: .875em;
+    }
+
+    .article-comment .comments .comment .content .actions a {
+        cursor: pointer;
+        display: inline-block;
+        margin: 0 .75em 0 0;
+        color: rgba(0, 0, 0, 0.4);
+    }
+
+    .article-comment .comments .comment.active {
+        padding: 10px;
+        background: rgba(68, 176, 53, 0.28);
+        border-radius: 5px;
+    }
+
+    .article-comment .comments .load {
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .article-comment .comments .load .button {
+        cursor: pointer;
+        display: inline-block;
+        min-height: 1em;
+        outline: none;
+        border: none;
+        vertical-align: baseline;
+        color: rgba(0, 0, 0, 0.6);
+        background: #e0e1e2 none;
+        padding: .78571429em 1.5em;
+        text-transform: none;
+        text-shadow: none;
+        font-weight: 400;
+        line-height: 1em;
+        font-style: normal;
+        text-align: center;
+        text-decoration: none;
+        border-radius: .28571429rem;
+        user-select: none;
+        font-size: 13px;
+    }
+
+    .article-comment .comments .load .button:hover {
+        background-color: #cacbcd;
+        color: rgba(0, 0, 0, 0.8);
+    }
+
+    @keyframes button-spin {
+        0% {
+            transform: rotate(0);
+        }
+        to {
+            transform: rotate(1turn);
+        }
+    }
+    </style>
+    <style type="text/css" data-react-helmet="true">#s531541316 pre {
+        background: #f9fafa;
+        border: 1px solid #ded9d9;
+    }
+
+    #s531541316 code {
+        background: #f9fafa;
+        border: 1px solid #ded9d9;
+        margin: 0px 5px;
+        padding: 2px 6px;
+    }
+
+    #s531541316 pre code {
+        border: none;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #s531541316 .default {
+        border-left: 5px solid #5bc0de;
+        margin: 8px 0;
+        padding: 8px 16px;
+        background-color: #f4f8fa;
+        color: #5bc0de;
+    }
+
+    #s531541316 h2 {
+
+        font-size: 24px;
+        font-weight: 400;
+    }
+    </style>
+</head>
+<body>
+<div id="main">
+    <div class="window-container with-head">
+        <div class="window-head">
+            <div class="toolbar">
+                <a data-no-pjax="true" class="title" href="#">ThinkPHP5.0完全开发手册</a>
+                <!--<div class="extra">-->
+                    <!--<div class="ui menu small secondary">-->
+                        <!--<a data-no-pjax="true" class="item" target="_self" href="#">快速入门系列教程</a>-->
+                        <!--<a data-no-pjax="true" class="item" target="_blank" href="#">开发者周刊</a>-->
+                        <!--<a data-no-pjax="true" class="item" target="_self" href="#">5.1开发手册</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+
+
+        <div class="window-body with-sidebar">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <div class="search-form">
+                        <div class="ui small fluid icon input"><input type="text" placeholder="请输入搜索关键词..."><i
+                                class="icon search"></i></div>
+                    </div>
+                </div>
+                <div class="sidebar-body">
+                    <div class="catalog-body">
+                        <ul>
+                            <li class="active">
+                                <div class="wholerow"></div>
+                                <i class="icon"></i>
+                                <a href="#" class="text">序言</a>
+                            </li>
+                            <li class="">
+                                <div class="wholerow"></div>
+                                <i class="icon caret right"></i><a
+                                    href="#" class="text">基础</a>
+                                <ul>
+                                    <li class="">
+                                        <div class="wholerow"></div>
+                                        <i class="icon"></i>
+                                        <a href="#" class="text">安装ThinkPHP</a>
+                                    </li>
+                                    <li class="">
+                                        <div class="wholerow"></div>
+                                        <i class="icon"></i>
+                                        <a href="#" class="text">开发规范</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="">
+                                <div class="wholerow"></div>
+                                <i class="icon caret right"></i><a
+                                    href="#" class="text">架构</a>
+                                <ul>
+                                    <li class="">
+                                        <div class="wholerow"></div>
+                                        <i class="icon"></i>
+                                        <a href="#" class="text">架构总览</a>
+                                    </li>
+                                    <li class="">
+                                        <div class="wholerow"></div>
+                                        <i class="icon"></i>
+                                        <a href="#" class="text">生命周期</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sidebar-copyright">本文档使用 <a href="#" target="_blank">看云</a> 构建</div>
+            </div>
+            <div class="workspace">
+                <div class="article">
+                    <div class="article-head">
+                        <div class="left tools">
+                            <a class="item icon"><i class="icon align justify"></i></a>
+                        </div>
+                        <h1>文章标题</h1>
+                        <div class="right tools"></div>
+                    </div>
+                    <div class="article-body kancloud-markdown-body">文章内容</div>
+                    <div class="article-navigation">
+                        <span class="prev">上一篇：<a href="#">架构</a></span>
+                        <span class="next">下一篇：<a href="#">基础</a></span>
+                    </div>
+                    <div class="article-foot">
+                        <div class="article-comment">
+                            <h3 class="header">相关评论(167)</h3>
+                            <form class="form">
+                                <input type="hidden" name="article_id" value="">
+                                <div class="field">
+                                    <textarea disabled="" name="content" placeholder="文明上网,理性发言" rows="4"></textarea>
+                                </div>
+                                <div class="field">
+                                    <span class="error">您需要<a href="#" target="_blank">登录</a>并<strong>绑定手机</strong>后才可以发表评论</span>
+                                    <button disabled="" type="submit" class="button">发布 (Ctrl+Enter)</button>
+                                </div>
+                            </form>
+                            <div class="comments">
+                                <div class="comment"><a class="avatar">
+                                    <img src="./asset/images/default_avatar.png"></a>
+                                    <div class="content">
+                                        <a class="author">honor</a>
+                                        <div class="metadata">@sugar1569 ·<span class="date">14 天前</span></div>
+                                        <div class="text article-body">评论内容</div>
+                                        <div class="actions"><a><i class="icon reply"></i>回复</a></div>
+                                    </div>
+                                </div>
+                                <div class="comment"><a class="avatar">
+                                    <img src="./asset/images/default_avatar.png"></a>
+                                    <div class="content">
+                                        <a class="author">ybmiao</a>
+                                        <div class="metadata">@ybmiao ·<span class="date">4 个月前</span></div>
+                                        <div class="text article-body"><p><a href="#">@kennygp</a>
+                                            将共有的方法操作放在common模块中，在api、web模块调用common模块的方法</p>
+                                        </div>
+                                        <div class="actions"><a><i class="icon reply"></i>回复</a></div>
+                                    </div>
+                                </div>
+                                <div class="load">
+                                    <button class="button">加载更多</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="{% static 'asset/js/jquery.min.js' %}"></script>
+<script>
+    $(function () {
+
+        $('.item.icon').click(function () {
+            var i = $('.window-body');
+            if(i.hasClass('with-sidebar')){
+                i.removeClass('with-sidebar')
+            }else{
+                i.addClass('with-sidebar')
+            }
+        });
+
+        $('.icon.caret').click(function () {
+            var i = $(this);
+            if(i.parent().hasClass('open')){
+                i.parent().removeClass('open');
+                i.addClass('right').removeClass('down')
+            }else{
+                i.parent().addClass('open');
+                i.addClass('down').removeClass('right');
+            }
+        })
+    })
+</script>
+</html>
